@@ -18,3 +18,32 @@ data_source = st.selectbox(
     options=data_source_options,
     index=0
 )
+
+
+# If data source = provided data -> read the prepared pickle files
+if data_source == data_source_options[1]:
+
+    # Read data from pickle
+    rf_pickle = open('pickle_files/random_forest_iris.pickle', 'rb')
+    map_pickle = open('pickle_files/output_iris.pickle', 'rb')
+    rfc = pickle.load(rf_pickle)
+    uniques = pickle.load(map_pickle)
+    rf_pickle.close()
+
+# If user wants to upload their own data -> read and train data
+elif data_source == data_source_options[2]:
+
+    # Upload
+    iris_file = st.file_uploader('Upload your own iris data')
+
+    # Train
+    if iris_file is not None:
+        df = pd.read_csv(iris_file)
+        rfc, uniques, score = random_forrest_classifier(
+            df=df,
+            x=['sepal.length', 'sepal.width', 'petal.length', 'petal.width'],
+            y='variety'
+        )
+        st.write('We trained a Random Forest model on these data,'
+                 ' it has a score of {}! Use the '
+                 'inputs below to try out the model.'.format(round(score, 2)))
