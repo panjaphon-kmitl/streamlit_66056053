@@ -20,6 +20,9 @@ data_source = st.selectbox(
 )
 
 
+# ---- Data preparation ----
+ready_for_prediction = False
+
 # If data source = provided data -> read the prepared pickle files
 if data_source == data_source_options[1]:
 
@@ -29,6 +32,7 @@ if data_source == data_source_options[1]:
     rfc = pickle.load(rf_pickle)
     uniques = pickle.load(map_pickle)
     rf_pickle.close()
+    ready_for_prediction = True
 
 # If user wants to upload their own data -> read and train data
 elif data_source == data_source_options[2]:
@@ -47,3 +51,4 @@ elif data_source == data_source_options[2]:
         st.write('We trained a Random Forest model on these data,'
                  ' it has a score of {}! Use the '
                  'inputs below to try out the model.'.format(round(score, 2)))
+        ready_for_prediction = True
