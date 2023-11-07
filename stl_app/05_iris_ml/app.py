@@ -27,8 +27,8 @@ ready_for_prediction = False
 if data_source == data_source_options[1]:
 
     # Read data from pickle
-    rf_pickle = open('pickle_files/random_forest_iris.pickle', 'rb')
-    map_pickle = open('pickle_files/output_iris.pickle', 'rb')
+    rf_pickle = open('files/pickle/random_forest_iris.pickle', 'rb')
+    map_pickle = open('files/pickle/output_iris.pickle', 'rb')
     rfc = pickle.load(rf_pickle)
     uniques = pickle.load(map_pickle)
     rf_pickle.close()
@@ -65,3 +65,9 @@ if ready_for_prediction:
         petal_length = st.number_input('Petal Length', min_value=0.0, value=0.0, step=0.1)
         petal_width = st.number_input('Petal Width', min_value=0.0, value=0.0, step=0.1)
         submit = st.form_submit_button()
+
+    # If form button is pressed -> make prediction
+    if submit:
+        new_prediction = rfc.predict([[sepal_length, sepal_width, petal_length, petal_width]])
+        prediction_variety = uniques[new_prediction][0]
+        st.write('We predict your iris is of the **{}** variety'.format(prediction_variety))
