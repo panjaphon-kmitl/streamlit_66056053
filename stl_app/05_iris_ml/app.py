@@ -52,3 +52,16 @@ elif data_source == data_source_options[2]:
                  ' it has a score of {}! Use the '
                  'inputs below to try out the model.'.format(round(score, 2)))
         ready_for_prediction = True
+
+
+# ---- Make prediction ----
+if ready_for_prediction:
+    st.header('2. What does your iris look like? Enter below to find out what variety it might be')
+
+    # Form
+    with st.form('user_inputs'):
+        sepal_length = st.number_input('Sepal Length', min_value=0.0, value=0.0, step=0.1)
+        sepal_width = st.number_input('Sepal Width', min_value=0.0, value=0.0, step=0.1)
+        petal_length = st.number_input('Petal Length', min_value=0.0, value=0.0, step=0.1)
+        petal_width = st.number_input('Petal Width', min_value=0.0, value=0.0, step=0.1)
+        submit = st.form_submit_button()
