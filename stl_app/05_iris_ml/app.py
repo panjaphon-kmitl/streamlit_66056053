@@ -26,6 +26,11 @@ ready_for_prediction = False
 # If data source = provided data -> read the prepared pickle files
 if data_source == data_source_options[1]:
 
+    # Data preview
+    preview = st.checkbox('Show the data?')
+    if preview:
+        st.write(pd.read_csv('files/csv/iris.csv'))
+
     # Read data from pickle
     rf_pickle = open('files/pickle/random_forest_iris.pickle', 'rb')
     map_pickle = open('files/pickle/output_iris.pickle', 'rb')
@@ -36,6 +41,11 @@ if data_source == data_source_options[1]:
 
 # If user wants to upload their own data -> read and train data
 elif data_source == data_source_options[2]:
+
+    # Show dataframe sample for input validation
+    st.warning('Please make sure that your data looks like this in terms of **data types** and **column names**')
+    sample_df = pd.read_csv('files/csv/iris.csv').head(2)
+    st.dataframe(sample_df)
 
     # Upload
     iris_file = st.file_uploader('Upload your own iris data')
